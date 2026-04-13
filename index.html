@@ -12,7 +12,7 @@
             --p-cyan: #00f2fe;
             --p-pink: #ff007f;
             --p-dark: #0a081a;
-            --p-border: #ffffff;
+            --p-border: #ffffff; /* Cor branca para as bordas das fotos e contador */
             --p-yellow: #ffeb3b;
         }
 
@@ -22,25 +22,31 @@
             margin: 0; padding: 0;
             font-family: 'Press Start 2P', cursive;
             background: var(--p-dark);
-            background-image: radial-gradient(circle at 50% 50%, #1a1a3a 0%, #0a081a 100%);
+            /* Novo fundo com a estrela.jpeg espalhada */
+            background-image: 
+                radial-gradient(circle at 50% 50%, #1a1a3a 0%, #0a081a 100%),
+                url('estrela.jpeg');
+            background-repeat: repeat;
+            background-size: 100px 100px; /* Ajuste o tamanho da estrela no fundo aqui */
+            background-blend-mode: overlay; /* Mistura a imagem com o gradiente de cor */
+            
             height: 100vh; display: flex; justify-content: center; align-items: center;
             overflow: hidden; color: white;
         }
 
         #jogo-container {
             background: rgba(15, 10, 30, 0.95);
-            border: 4px solid var(--p-border);
+            border: 4px solid #ffffff; /* Borda branca do container principal */
             padding: 30px 20px; width: 92%; max-width: 360px;
-            min-height: 450px; /* Garante um tamanho consistente */
+            min-height: 450px;
             display: flex; flex-direction: column; justify-content: center;
             text-align: center; position: relative;
             box-shadow: 0 0 40px rgba(110, 127, 243, 0.4); z-index: 10;
         }
 
-        /* Seções internas com espaçamento entre elementos */
         .secao-conteudo {
             display: flex; flex-direction: column;
-            gap: 20px; /* Espaço mágico entre os itens */
+            gap: 20px;
             height: 100%; justify-content: center;
         }
 
@@ -59,21 +65,45 @@
         }
 
         .notificacao-conquista.visible { opacity: 1; transform: translateY(0); }
-        .icone-estrela { width: 24px; height: 24px; image-rendering: pixelated; }
+        
+        .icone-estrela { 
+            width: 24px; height: 24px; 
+            image-rendering: pixelated; 
+            animation: pulse-purple 2s ease-in-out infinite; /* Mantém o pulso roxo na estrela da conquista */
+        }
+
+        /* Borda Retrô Roxa (usada na estrela) */
+        .borda-retro-roxa {
+            border: 4px double var(--p-purple);
+            box-shadow: 0 0 10px rgba(157, 80, 187, 0.5);
+        }
+
+        /* Borda Retrô Branca (usada nas fotos e AGORA no contador) */
+        .borda-retro-branca {
+            border: 4px double #ffffff; /* Borda dupla branca */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Brilho branco suave */
+        }
 
         /* --- ESTILOS DE TEXTO --- */
         h1 { font-size: 10px; line-height: 1.6; margin: 0; text-shadow: 2px 2px var(--p-blue); }
         p { margin: 0; line-height: 1.6; }
 
         .foto-pixel {
-            width: 170px; height: auto; border: 4px solid var(--p-blue);
+            width: 170px; height: auto; 
             padding: 5px; image-rendering: pixelated; align-self: center;
-            animation: pulse 2s ease-in-out infinite;
+            animation: pulse-white 2s ease-in-out infinite; /* Animação pulsar branca para as fotos */
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--p-blue)); }
-            50% { transform: scale(1.03); filter: drop-shadow(0 0 10px var(--p-blue)); }
+        /* Animação pulsar roxa (para a estrela e container) */
+        @keyframes pulse-purple {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--p-purple)); }
+            50% { transform: scale(1.03); filter: drop-shadow(0 0 15px var(--p-purple)); }
+        }
+
+        /* Animação pulsar branca (para as fotos) */
+        @keyframes pulse-white {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px #ffffff); }
+            50% { transform: scale(1.03); filter: drop-shadow(0 0 15px #ffffff); }
         }
 
         /* --- BOTÕES --- */
@@ -95,7 +125,9 @@
 
         #contador {
             font-size: 9px; background: rgba(0, 0, 0, 0.85); padding: 15px 10px;
-            border: 4px double var(--p-cyan); line-height: 2.2;
+            line-height: 2.2;
+            /* A animação não existe aqui no CSS original, o pulso é só nas fotos. 
+               O contador só tem a borda e o fundo. */
         }
 
         @keyframes explosaoVitoria {
@@ -114,7 +146,7 @@
     <div id="jogo-container">
         
         <div id="tela-inicial" class="secao-conteudo">
-            <img src="foto.png" alt="NOSSA FOTO" class="foto-pixel">
+            <img src="foto.png" alt="NOSSA FOTO" class="foto-pixel borda-retro-branca">
             <h1>VOCE ME AMA?</h1>
             <div class="btn-container">
                 <button class="purple-btn" onclick="mostrarSecao('sim')">SIM [ 💜 ]</button>
@@ -126,13 +158,13 @@
 
         <div id="resposta-sim" class="hidden secao-conteudo">
             <h1>EU TAMBEM TE AMO ISADORA!</h1>
-            <p style="color: var(--p-cyan); font-size: 9px;">AMOR DA MINHA VIDA!</p>
+            <p style="color: var(--p-blue); font-size: 9px;">AMOR DA MINHA VIDA!</p>
             <button class="btn-voltar" onclick="voltarMenu()">[ VOLTAR ]</button>
         </div>
 
         <div id="resposta-concerteza" class="hidden secao-conteudo">
-            <h1>CONECTADAS DESDE <br><span style="color: var(--p-yellow)">05/07/2025</span></h1>
-            <div id="contador">CALCULANDO...</div>
+            <h1>CONECTADAS DESDE <br><span style="color: var(--p-blue); text-shadow: 2px 2px var(--p-purple);">05/07/2025</span></h1>
+            <div id="contador" class="borda-retro-branca">CALCULANDO...</div>
             <p style="color: var(--p-blue); font-size: 8px;">PRA SEMPRE E SEMPRE AMOR!</p>
             <button class="btn-voltar" onclick="voltarMenu()">[ VOLTAR ]</button>
         </div>
@@ -144,14 +176,14 @@
             </div>
             <div id="final-obvio" class="hidden">
                 <span style="font-size: 40px; display: block; margin-bottom: 10px;">🙄</span>
-                <p style="color: var(--p-pink); font-size: 11px;">VOCE ME PEGOU !!!</p>
+                <p style="color: var(--p-blue); font-size: 11px;">VOCE ME PEGOU !!!</p>
             </div>
             <button class="btn-voltar" onclick="voltarMenu()">[ VOLTAR ]</button>
         </div>
 
         <div id="resposta-sorriso" class="hidden secao-conteudo">
             <h1>SEU SORRISO ILUMINA TUDO!</h1>
-            <img src="sorriso.jpeg" alt="SORRISO" class="foto-pixel" style="border-color: #ffaa00;">
+            <img src="sorriso.jpeg" alt="SORRISO" class="foto-pixel borda-retro-branca">
             <p style="color: #fff; font-size: 8px;">SEU SORRISO E PERFEITO, <br> SOU APAIXONADA!</p>
             <button class="btn-voltar" onclick="voltarMenu()">[ VOLTAR ]</button>
         </div>
@@ -160,7 +192,9 @@
 
     <template id="template-conquista">
         <div class="notificacao-conquista">
-            <div style="border: 2px solid var(--p-purple); margin-right: 10px; padding: 4px;"><img src="estrela.png" class="icone-estrela"></div>
+            <div style="margin-right: 10px; padding: 4px;">
+                <img src="estrela.png" class="icone-estrela">
+            </div>
             <div>
                 <div style="font-size: 6px; color: var(--p-yellow);">Achievement Unlocked</div>
                 <div class="ach-title" style="font-size: 7px;"></div>
