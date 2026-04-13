@@ -42,44 +42,38 @@
             box-shadow: 0 0 40px rgba(110, 127, 243, 0.4); z-index: 10;
         }
 
-        /* --- SISTEMA DE CONQUISTAS (TAMANHO MÉDIO AJUSTADO) --- */
+        /* --- SISTEMA DE CONQUISTAS --- */
         #conquista-wrapper {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            width: 94vw; max-width: 340px; /* Reduzido max-width */
-            display: flex; flex-direction: column;
+            width: 94vw; max-width: 340px; display: flex; flex-direction: column;
             gap: 10px; z-index: 9999; pointer-events: none;
         }
 
         .notificacao-conquista {
             background: rgba(20, 15, 40, 0.98); border: 3px solid #fff; outline: 3px solid #000;
-            padding: 8px; /* Reduzido padding */
-            display: flex; align-items: center; opacity: 0;
+            padding: 8px; display: flex; align-items: center; opacity: 0;
             transform: translateY(-50px); transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-            width: auto; /* Quadrado se ajusta ao tamanho */
-            align-self: center; /* Centraliza a caixa em relação ao wrapper */
+            align-self: center;
         }
 
         .notificacao-conquista.visible { opacity: 1; transform: translateY(0); }
-        
-        /* MOLDURA DA ESTRELA TRANSPARENTE (MÉDIA AJUSTADA) */
-        .moldura-icone { 
-            width: 36px; height: 36px; /* Reduzido tamanho */
-            border: 2px solid var(--p-purple); 
-            margin-right: 10px; /* Reduzida margem */
-            display: flex; align-items: center; justify-content: center; 
-            background: transparent; 
+        .moldura-icone { width: 36px; height: 36px; border: 2px solid var(--p-purple); margin-right: 10px; display: flex; align-items: center; justify-content: center; }
+        .icone-estrela { width: 24px; height: 24px; image-rendering: pixelated; filter: drop-shadow(0 0 4px var(--p-purple)) drop-shadow(0 0 1px #fff); }
+        .ach-header { font-size: 6px; color: var(--p-yellow); margin-bottom: 3px; }
+        .ach-title { font-size: 7px; color: #fff; line-height: 1.2; }
+
+        /* --- NOVA ANIMAÇÃO: EXPLOSÃO DO BEIJO (BAIXO PARA CIMA) --- */
+        @keyframes explosaoVitoria {
+            0% { transform: translate(0, 0) scale(0.1); opacity: 0; }
+            15% { opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--rot)); opacity: 0; }
         }
 
-        /* EFEITO DE BRILHO ROXO (MÉDIO AJUSTADO) */
-        .icone-estrela { 
-            width: 24px; height: 24px; /* Reduzido tamanho */
-            image-rendering: pixelated; 
-            background: transparent;
-            filter: drop-shadow(0 0 4px var(--p-purple)) drop-shadow(0 0 1px #fff); /* Ajustado brilho */
+        .particula-vitoria {
+            position: fixed; bottom: 0; left: 50%; /* Nasce concentrado no centro inferior */
+            z-index: 9998; pointer-events: none;
+            animation: explosaoVitoria 3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
         }
-
-        .ach-header { font-size: 6px; color: var(--p-yellow); margin-bottom: 3px; } /* Reduzida fonte */
-        .ach-title { font-size: 7px; color: #fff; line-height: 1.2; } /* Reduzida fonte */
 
         /* --- ELEMENTOS VISUAIS --- */
         .foto-pixel {
@@ -123,7 +117,6 @@
             border: 4px double var(--p-cyan); margin: 20px 0; line-height: 2.5;
         }
 
-        .pixel-star { position: absolute; background: white; z-index: -1; opacity: 0.3; }
         .emoji-central { font-size: 50px; display: block; margin: 20px auto; animation: bounce 1s infinite alternate; }
         @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
     </style>
@@ -152,7 +145,6 @@
 
         <div id="resposta-sim" class="hidden">
             <h1>EU TAMBEM TE AMO ISADORA!</h1>
-            <p style="color: var(--p-cyan); font-size: 9px;">VOCE E A MELHOR PESSOA QUE CONHECO!</p>
             <button style="margin-top:20px; width:100%" onclick="voltarMenu()">[ VOLTAR ]</button>
         </div>
 
@@ -177,7 +169,6 @@
         <div id="resposta-sorriso" class="hidden">
             <h1>SEU SORRISO ILUMINA TUDO!</h1>
             <img src="sorriso.jpeg" alt="SORRISO" class="foto-pixel" style="border-color: #ffaa00; margin-bottom:15px;">
-            <p style="font-size: 9px; line-height: 1.6;">SOU APAIXONADA POR VOCÊ!</p>
             <button style="margin-top:20px; width:100%" onclick="voltarMenu()">[ VOLTAR ]</button>
         </div>
     </div>
@@ -212,25 +203,41 @@
             }, 5000);
         }
 
-        function iniciarChuvaVitoria() {
-            for (let i = 0; i < 60; i++) {
+        // --- CORREÇÃO: FUNÇÃO DE EXPLOSÃO DO BEIJO (DE BAIXO PARA CIMA) ---
+        function iniciarExplosaoVitoria() {
+            const wrapJogo = document.getElementById('jogo-container');
+            
+            for (let i = 0; i < 70; i++) {
                 setTimeout(() => {
                     const el = document.createElement('div');
-                    el.className = 'elemento-chuva';
+                    el.className = 'particula-vitoria';
                     const tipo = Math.random();
+                    
                     if (tipo > 0.6) {
-                        el.innerHTML = `<img src="estrela.png" style="width:22px; height:22px; filter: drop-shadow(0 0 5px var(--p-purple));">`;
+                        el.innerHTML = `<img src="estrela.png" style="width:26px; height:26px; image-rendering: pixelated; filter: drop-shadow(0 0 5px var(--p-purple));">`;
                     } else {
                         el.innerText = tipo > 0.3 ? '💜' : '💙';
-                        el.style.fontSize = '20px';
-                        el.style.filter = `drop-shadow(0 0 3px ${tipo > 0.3 ? 'var(--p-purple)' : 'var(--p-cyan)'})`;
+                        el.style.fontSize = '24px';
+                        el.style.filter = `drop-shadow(0 0 5px ${tipo > 0.3 ? 'var(--p-purple)' : 'var(--p-cyan)'})`;
                     }
-                    el.style.left = Math.random() * 100 + 'vw';
-                    el.style.top = '-50px';
-                    el.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    
+                    // Define a trajetória de explosão para cima
+                    const angle = (Math.random() * Math.PI) - Math.PI; // Ângulo para cima (-180 a 0 graus)
+                    const radius = Math.random() * 150 + 100; // Distância da explosão (v (px))
+                    
+                    // Variáveis CSS para o Keyframe
+                    const angleDeg = (Math.random() * 120 - 60); // Ângulo para cima (-60 a 60 graus)
+                    const velocity = Math.random() * 200 + 150; // Velocidade (px)
+                    
+                    el.style.setProperty('--dx', `${Math.sin(angleDeg * Math.PI / 180) * velocity}px`);
+                    el.style.setProperty('--dy', `-${Math.cos(angleDeg * Math.PI / 180) * velocity + 500}px`); // Voa para cima
+                    el.style.setProperty('--rot', `${Math.random() * 720 - 360}deg`);
+                    
+                    el.style.animationDuration = (Math.random() * 1.5 + 1.5) + 's';
+                    
                     document.body.appendChild(el);
-                    setTimeout(() => el.remove(), 4000);
-                }, i * 80);
+                    setTimeout(() => el.remove(), 3500);
+                }, i * 20); // Cria um fluxo rápido
             }
         }
 
@@ -238,15 +245,8 @@
             if (audio.paused) audio.play().catch(() => {});
         }
 
+        // Efeito de fundo contínuo (Você disse que está certo)
         function initEffect() {
-            for(let i=0; i<25; i++) {
-                const star = document.createElement('div');
-                star.className = 'pixel-star';
-                star.style.width = star.style.height = '2px';
-                star.style.left = Math.random() * 100 + 'vw';
-                star.style.top = Math.random() * 100 + 'vh';
-                document.body.appendChild(star);
-            }
             setInterval(() => {
                 const div = document.createElement('div');
                 div.className = 'floating';
@@ -300,11 +300,15 @@
                 btnF.style.top = Math.random() * (wrap.clientHeight - btnF.clientHeight) + 'px';
                 if(cliquesFugitivo === 3) btnF.innerText = "MAIS RAPIDO! ✨";
             } else {
+                // --- VITÓRIA ---
                 btnF.style.display = 'none';
                 wrap.style.display = 'none';
                 document.getElementById('final-obvio').classList.remove('hidden');
-                dispararConquista("ganhou um beijo meu amor!! 💋"); /* Texto alterado */
-                iniciarChuvaVitoria();
+                
+                dispararConquista("ganhou um beijo meu amor!! 💋");
+                
+                // === NOVO: DISPARA A EXPLOSÃO DE VITÓRIA (CORRIGIDO) ===
+                iniciarExplosaoVitoria();
             }
         }
 
