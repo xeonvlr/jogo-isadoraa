@@ -9,6 +9,8 @@
         :root {
             --p-purple: #9d50bb; /* Roxo Isadora */
             --p-blue: #6e7ff3;   /* Azul Concerteza */
+            --p-cyan: #00f2fe;   /* Ciano Resposta Sim */
+            --p-pink: #ff007f;   /* Rosa Obvio */
             --p-dark: #050510;   /* Preto Espacial */
             --p-border: #ffffff;
             --p-yellow: #ffeb3b;
@@ -20,31 +22,42 @@
             margin: 0; padding: 0;
             font-family: 'Press Start 2P', cursive;
             
-            /* --- FUNDO CÉU ESPACIAL (MANTIDO) --- */
+            /* --- NOVO FUNDO CÉU ESPACIAL APERFEIÇOADO (BASEADO NA FOTO) --- */
+            /* Camada 1: Gradiente Céu (Roxo para Azul Profundo) */
             background-image: 
                 radial-gradient(circle at 50% 50%, #2e1a47 0%, #1a1a3a 40%, #050510 100%),
+                /* Camada 2: Estrelas CSS Pequenas */
                 radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+                /* Camada 3: Estrelas CSS Médias */
                 radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
-                linear-gradient(217deg, rgba(255,255,255,.05), rgba(255,255,255,0) 70.71%);
-            background-repeat: no-repeat, repeat, repeat, repeat;
-            background-position: center, 20px 50px, 130px 270px, 150px 10px;
-            background-size: cover, 200px 200px, 150px 150px, 50% 100%; 
-            background-blend-mode: normal, screen, screen, screen;
+                /* Camada 4: Estrelas CSS Grandes */
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px),
+                /* Camada 5: Rastros de Meteoros (Linhas) */
+                linear-gradient(217deg, rgba(255,255,255,.05), rgba(255,255,255,0) 70.71%),
+                linear-gradient(127deg, rgba(255,255,255,.07), rgba(255,255,255,0) 70.71%),
+                /* Camada 6: Sua Estrela (`estrela.jpeg`) integrada */
+                url('estrela.jpeg');
+            
+            /* Configurações das camadas de fundo */
+            background-repeat: no-repeat, repeat, repeat, repeat, repeat, repeat, repeat;
+            background-position: center, 20px 50px, 130px 270px, 70px 100px, 150px 10px, 10px 150px, center;
+            /* Tamanhos: Gradiente, Estrelas Pequenas, Médias, Grandes, Meteoros 1, 2, Sua Estrela */
+            background-size: cover, 200px 200px, 150px 150px, 300px 300px, 50% 100%, 100% 50%, 80px 80px; 
+            background-blend-mode: normal, screen, screen, screen, screen, screen, overlay; /* Mistura perfeita */
             
             height: 100vh; display: flex; justify-content: center; align-items: center;
             overflow: hidden; color: white;
-            position: relative; /* Necessário para os elementos flutuantes */
         }
 
         #jogo-container {
-            background: rgba(15, 10, 30, 0.97);
+            background: rgba(15, 10, 30, 0.96); /* Um pouco mais opaco para legibilidade */
             border: 4px solid #ffffff;
             padding: 30px 20px; width: 92%; max-width: 360px;
             min-height: 450px;
             display: flex; flex-direction: column; justify-content: center;
             text-align: center; position: relative;
-            box-shadow: 0 0 40px rgba(157, 80, 187, 0.4); 
-            z-index: 10; /* Garante que o container fique na frente */
+            /* Brilho roxo do container integrado ao céu */
+            box-shadow: 0 0 40px rgba(157, 80, 187, 0.4); z-index: 10;
         }
 
         .secao-conteudo {
@@ -68,72 +81,67 @@
         }
 
         .notificacao-conquista.visible { opacity: 1; transform: translateY(0); }
-        .icone-estrela { width: 24px; height: 24px; image-rendering: pixelated; animation: pulse-purple 2s ease-in-out infinite; }
+        
+        .icone-estrela { 
+            width: 24px; height: 24px; 
+            image-rendering: pixelated; 
+            animation: pulse-purple 2s ease-in-out infinite;
+        }
 
-        /* BORDAS E ANIMAÇÕES */
-        .borda-retro-branca { border: 4px double #ffffff; box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+        .borda-retro-roxa {
+            border: 4px double var(--p-purple);
+            box-shadow: 0 0 10px rgba(157, 80, 187, 0.5);
+        }
+
+        .borda-retro-branca {
+            border: 4px double #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
         h1 { font-size: 10px; line-height: 1.6; margin: 0; text-shadow: 2px 2px var(--p-blue); }
         p { margin: 0; line-height: 1.6; }
-        .foto-pixel { width: 170px; height: auto; padding: 5px; image-rendering: pixelated; align-self: center; animation: pulse-white 2s ease-in-out infinite; }
 
-        @keyframes pulse-purple { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--p-purple)); } 50% { transform: scale(1.03); filter: drop-shadow(0 0 15px var(--p-purple)); } }
-        @keyframes pulse-white { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px #ffffff); } 50% { transform: scale(1.03); filter: drop-shadow(0 0 15px #ffffff); } }
+        .foto-pixel {
+            width: 170px; height: auto; 
+            padding: 5px; image-rendering: pixelated; align-self: center;
+            animation: pulse-white 2s ease-in-out infinite;
+        }
 
-        /* BOTÕES */
+        @keyframes pulse-purple {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--p-purple)); }
+            50% { transform: scale(1.03); filter: drop-shadow(0 0 15px var(--p-purple)); }
+        }
+
+        @keyframes pulse-white {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px #ffffff); }
+            50% { transform: scale(1.03); filter: drop-shadow(0 0 15px #ffffff); }
+        }
+
         .btn-container { display: flex; flex-direction: column; gap: 12px; }
-        button { padding: 16px 10px; font-family: 'Press Start 2P', cursive; font-size: 8px; border: 4px solid #000; cursor: pointer; background: var(--p-blue); color: white; box-shadow: inset -4px -4px 0px rgba(0,0,0,0.4); position: relative; }
+        button {
+            padding: 16px 10px; font-family: 'Press Start 2P', cursive; font-size: 8px;
+            border: 4px solid #000; cursor: pointer; background: var(--p-blue); color: white;
+            box-shadow: inset -4px -4px 0px rgba(0,0,0,0.4); position: relative;
+        }
+
         .btn-voltar { width: 100%; margin-top: 10px; }
         .purple-btn { background: var(--p-purple); }
-        .pink-btn { background: #ff007f; }
+        .pink-btn { background: var(--p-pink); }
         .hidden { display: none !important; }
 
-        /* --- NOVO SISTEMA DE ELEMENTOS FLUTUANTES NO FUNDO --- */
-        .floating-container {
-            position: absolute;
-            bottom: -50px; /* Começa um pouco abaixo da tela */
-            pointer-events: none;
-            z-index: 1; /* Atrás do container principal */
-            animation: floatUp ease-in forwards;
-            opacity: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .floating { position: absolute; pointer-events: none; z-index: 1; animation: floatUp 3s linear forwards; font-size: 24px; }
+        @keyframes floatUp { 0% { transform: translateY(110vh); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(-20vh); opacity: 0; } }
+
+        #contador {
+            font-size: 9px; background: rgba(0, 0, 0, 0.85); padding: 15px 10px;
+            line-height: 2.2;
         }
 
-        /* Estilo para Corações */
-        .floating-heart {
-            font-size: 24px;
+        @keyframes explosaoVitoria {
+            0% { transform: translate(0, 0) scale(0.1); opacity: 0; }
+            15% { opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--rot)); opacity: 0; }
         }
-
-        /* Estilo para Sua Estrela Subindo */
-        .floating-star {
-            width: 30px;
-            height: 30px;
-            background-image: url('estrela.jpeg');
-            background-size: cover;
-            image-rendering: pixelated;
-        }
-
-        /* Animação de Subida (Float Up) */
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.7; /* Opacidade sutil para não atrapalhar */
-            }
-            90% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: translateY(-120vh) rotate(360deg); /* Sobe além do topo */
-                opacity: 0;
-            }
-        }
-
-        #contador { font-size: 9px; background: rgba(0, 0, 0, 0.85); padding: 15px 10px; line-height: 2.2; }
-        @keyframes explosaoVitoria { 0% { transform: translate(0, 0) scale(0.1); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--rot)); opacity: 0; } }
         .particula-vitoria { position: fixed; bottom: 0; left: 50%; z-index: 9998; pointer-events: none; animation: explosaoVitoria 3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
     </style>
 </head>
@@ -191,7 +199,9 @@
 
     <template id="template-conquista">
         <div class="notificacao-conquista">
-            <div style="margin-right: 10px; padding: 4px;"><img src="estrela.png" class="icone-estrela"></div>
+            <div style="margin-right: 10px; padding: 4px;">
+                <img src="estrela.png" class="icone-estrela">
+            </div>
             <div>
                 <div style="font-size: 6px; color: var(--p-yellow);">Achievement Unlocked</div>
                 <div class="ach-title" style="font-size: 7px;"></div>
@@ -289,66 +299,15 @@
         btnF.addEventListener('touchstart', (e) => { e.preventDefault(); fugir(); });
         function iniciarAudioAoClicar() { if (audio.paused) audio.play().catch(() => {}); }
 
-        /* --- NOVO SCRIPT PARA GERAR ELEMENTOS FLUTUANTES NO FUNDO --- */
-        function criarChuvaDeAmor() {
-            const numeroDeElementos = 10; // 10 elementos por ciclo
-            const containerPai = document.body;
-
-            for (let i = 0; i < numeroDeElementos; i++) {
-                // Criar o container wrapper para animação
-                const wrapper = document.createElement('div');
-                wrapper.className = 'floating-container';
-
-                // Decidir aleatoriamente se é um coração ou a estrela.jpeg
-                const tipo = Math.random();
-                let elementoInterno;
-
-                if (tipo > 0.3) { 
-                    // 70% de chance de ser um coração
-                    elementoInterno = document.createElement('span');
-                    elementoInterno.className = 'floating-heart';
-                    elementoInterno.innerText = Math.random() > 0.5 ? '💜' : '💙';
-                    
-                    // Tamanho aleatório para os corações
-                    const tamanho = Math.random() * 15 + 15 + 'px'; // Entre 15px e 30px
-                    elementoInterno.style.fontSize = tamanho;
-                } else {
-                    // 30% de chance de ser a estrela.jpeg subindo
-                    elementoInterno = document.createElement('div');
-                    elementoInterno.className = 'floating-star';
-                    
-                    // Tamanho aleatório para as estrelas
-                    const tamanho = Math.random() * 20 + 20 + 'px'; // Entre 20px e 40px
-                    elementoInterno.style.width = tamanho;
-                    elementoInterno.style.height = tamanho;
-                }
-
-                wrapper.appendChild(elementoInterno);
-
-                // Configurações aleatórias de posição e animação
-                const posicaoX = Math.random() * 100 + 'vw'; // Posição horizontal aleatória
-                const duracaoAnimação = Math.random() * 3 + 4 + 's'; // Duração entre 4s e 7s
-                const delayAnimação = Math.random() * 2 + 's'; // Delay aleatório para não subirem todos juntos
-
-                wrapper.style.left = posicaoX;
-                wrapper.style.animationDuration = duracaoAnimação;
-                wrapper.style.animationDelay = delayAnimação;
-
-                containerPai.appendChild(wrapper);
-
-                // Remover o elemento após a animação terminar para não pesar o navegador
-                setTimeout(() => {
-                    wrapper.remove();
-                }, (parseFloat(duracaoAnimação) + parseFloat(delayAnimação)) * 1000);
-            }
-        }
-
         window.onload = () => {
-            // Iniciar a chuva de amor imediatamente
-            criarChuvaDeAmor();
-            // E repetir a cada 2.5 segundos (2500 milissegundos)
-            setInterval(criarChuvaDeAmor, 2500);
-
+            setInterval(() => {
+                const div = document.createElement('div');
+                div.className = 'floating';
+                div.innerText = ['💜', '💙'][Math.floor(Math.random() * 2)];
+                div.style.left = (Math.random() * 90) + 'vw';
+                document.body.appendChild(div);
+                setTimeout(() => div.remove(), 3000);
+            }, 400);
             setTimeout(() => dispararConquista("eu namoro a menina mais linda do mundo!!!❤️"), 1000);
         };
     </script>
