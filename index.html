@@ -25,15 +25,23 @@
             background-image: radial-gradient(circle at 50% 50%, #1a1a3a 0%, #0a081a 100%);
             height: 100vh; display: flex; justify-content: center; align-items: center;
             overflow: hidden; color: white;
-            cursor: url('https://cur.cursors-4u.net/symbols/sym-9/sym847.cur'), auto;
         }
 
         #jogo-container {
             background: rgba(15, 10, 30, 0.95);
             border: 4px solid var(--p-border);
-            padding: 25px 15px; width: 90%; max-width: 360px;
+            padding: 30px 20px; width: 92%; max-width: 360px;
+            min-height: 450px; /* Garante um tamanho consistente */
+            display: flex; flex-direction: column; justify-content: center;
             text-align: center; position: relative;
             box-shadow: 0 0 40px rgba(110, 127, 243, 0.4); z-index: 10;
+        }
+
+        /* Seções internas com espaçamento entre elementos */
+        .secao-conteudo {
+            display: flex; flex-direction: column;
+            gap: 20px; /* Espaço mágico entre os itens */
+            height: 100%; justify-content: center;
         }
 
         /* --- SISTEMA DE CONQUISTAS --- */
@@ -51,137 +59,111 @@
         }
 
         .notificacao-conquista.visible { opacity: 1; transform: translateY(0); }
-        .moldura-icone { width: 36px; height: 36px; border: 2px solid var(--p-purple); margin-right: 10px; display: flex; align-items: center; justify-content: center; }
-        .icone-estrela { width: 24px; height: 24px; image-rendering: pixelated; filter: drop-shadow(0 0 4px var(--p-purple)) drop-shadow(0 0 1px #fff); }
-        .ach-header { font-size: 6px; color: var(--p-yellow); margin-bottom: 3px; }
-        .ach-title { font-size: 7px; color: #fff; line-height: 1.2; }
+        .icone-estrela { width: 24px; height: 24px; image-rendering: pixelated; }
 
-        /* --- EXPLOSÃO DO BEIJO --- */
-        @keyframes explosaoVitoria {
-            0% { transform: translate(0, 0) scale(0.1); opacity: 0; }
-            15% { opacity: 1; }
-            100% { transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--rot)); opacity: 0; }
-        }
-
-        .particula-vitoria {
-            position: fixed; bottom: 0; left: 50%;
-            z-index: 9998; pointer-events: none;
-            animation: explosaoVitoria 3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-        }
-
-        /* --- ESTILOS DE TEXTO ARRRUMADOS --- */
-        .texto-alinhado {
-            margin: 15px 0; /* Diminui o espaço excessivo */
-            line-height: 1.5;
-        }
+        /* --- ESTILOS DE TEXTO --- */
+        h1 { font-size: 10px; line-height: 1.6; margin: 0; text-shadow: 2px 2px var(--p-blue); }
+        p { margin: 0; line-height: 1.6; }
 
         .foto-pixel {
-            width: 180px; height: auto; border: 4px solid var(--p-blue);
-            padding: 5px; image-rendering: pixelated;
+            width: 170px; height: auto; border: 4px solid var(--p-blue);
+            padding: 5px; image-rendering: pixelated; align-self: center;
             animation: pulse 2s ease-in-out infinite;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--p-blue)); }
-            50% { transform: scale(1.03); filter: drop-shadow(0 0 15px var(--p-blue)); }
+            50% { transform: scale(1.03); filter: drop-shadow(0 0 10px var(--p-blue)); }
         }
 
-        h1 { font-size: 10px; line-height: 1.6; margin-bottom: 20px; text-shadow: 2px 2px var(--p-blue); }
+        /* --- BOTÕES --- */
         .btn-container { display: flex; flex-direction: column; gap: 12px; }
-
         button {
-            padding: 18px 10px; font-family: 'Press Start 2P', cursive; font-size: 8px;
+            padding: 16px 10px; font-family: 'Press Start 2P', cursive; font-size: 8px;
             border: 4px solid #000; cursor: pointer; background: var(--p-blue); color: white;
             box-shadow: inset -4px -4px 0px rgba(0,0,0,0.4); position: relative;
         }
 
-        .btn-voltar { width: 100%; margin-top: 15px; }
-
+        .btn-voltar { width: 100%; margin-top: 10px; }
         .purple-btn { background: var(--p-purple); }
         .pink-btn { background: var(--p-pink); }
         .hidden { display: none !important; }
 
-        .floating {
-            position: absolute; pointer-events: none; z-index: 1;
-            animation: floatUp 3s linear forwards; font-size: 24px;
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(110vh); opacity: 0; }
-            10% { opacity: 1; }
-            100% { transform: translateY(-20vh); opacity: 0; }
-        }
+        /* --- FUNDO E EFEITOS --- */
+        .floating { position: absolute; pointer-events: none; z-index: 1; animation: floatUp 3s linear forwards; font-size: 24px; }
+        @keyframes floatUp { 0% { transform: translateY(110vh); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(-20vh); opacity: 0; } }
 
         #contador {
-            font-size: 9px; background: rgba(0, 0, 0, 0.85); padding: 20px 10px;
-            border: 4px double var(--p-cyan); margin: 10px 0; line-height: 2.5;
+            font-size: 9px; background: rgba(0, 0, 0, 0.85); padding: 15px 10px;
+            border: 4px double var(--p-cyan); line-height: 2.2;
         }
 
-        .emoji-central { font-size: 50px; display: block; margin: 20px auto; animation: bounce 1s infinite alternate; }
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+        @keyframes explosaoVitoria {
+            0% { transform: translate(0, 0) scale(0.1); opacity: 0; }
+            15% { opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--rot)); opacity: 0; }
+        }
+        .particula-vitoria { position: fixed; bottom: 0; left: 50%; z-index: 9998; pointer-events: none; animation: explosaoVitoria 3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; }
     </style>
 </head>
 <body onclick="iniciarAudioAoClicar()">
 
-    <audio id="meuAudio" loop>
-        <source src="musica.mp3" type="audio/mpeg">
-    </audio>
-
+    <audio id="meuAudio" loop><source src="musica.mp3" type="audio/mpeg"></audio>
     <div id="conquista-wrapper"></div>
 
     <div id="jogo-container">
-        <div id="tela-inicial">
-            <div style="margin-bottom: 20px;"><img src="foto.png" alt="NOSSA FOTO" class="foto-pixel"></div>
+        
+        <div id="tela-inicial" class="secao-conteudo">
+            <img src="foto.png" alt="NOSSA FOTO" class="foto-pixel">
             <h1>VOCE ME AMA?</h1>
             <div class="btn-container">
-                <button class="purple-btn" onclick="mostrarSecao('sim')">SIM <br> [ 💜 ]</button>
-                <button onclick="mostrarSecao('concerteza')">CONCERTEZA <br> [ 💙 ]</button>
-                <button class="pink-btn" onclick="mostrarSecao('obvio')">OBVIO ISA <br> [ ✨ ]</button>
-                <button style="background: #ffaa00;" onclick="mostrarSecao('sorriso')">SORRISO <br> [ 😁 ]</button>
+                <button class="purple-btn" onclick="mostrarSecao('sim')">SIM [ 💜 ]</button>
+                <button onclick="mostrarSecao('concerteza')">CONCERTEZA [ 💙 ]</button>
+                <button class="pink-btn" onclick="mostrarSecao('obvio')">OBVIO ISA [ ✨ ]</button>
+                <button style="background: #ffaa00;" onclick="mostrarSecao('sorriso')">SORRISO [ 😁 ]</button>
             </div>
         </div>
 
-        <div id="resposta-sim" class="hidden">
+        <div id="resposta-sim" class="hidden secao-conteudo">
             <h1>EU TAMBEM TE AMO ISADORA!</h1>
             <p style="color: var(--p-cyan); font-size: 9px;">AMOR DA MINHA VIDA!</p>
             <button class="btn-voltar" onclick="voltarMenu()">[ VOLTAR ]</button>
         </div>
 
-        <div id="resposta-concerteza" class="hidden">
-            <h1 style="font-size: 9px; margin-bottom: 10px;">CONECTADAS DESDE <br><span style="color: var(--p-yellow)">05/07/2025</span></h1>
+        <div id="resposta-concerteza" class="hidden secao-conteudo">
+            <h1>CONECTADAS DESDE <br><span style="color: var(--p-yellow)">05/07/2025</span></h1>
             <div id="contador">CALCULANDO...</div>
-            <p class="texto-alinhado" style="color: var(--p-blue); font-size: 8px;">PRA SEMPRE E SEMPRE AMOR!</p>
+            <p style="color: var(--p-blue); font-size: 8px;">PRA SEMPRE E SEMPRE AMOR!</p>
             <button class="btn-voltar" onclick="voltarMenu()">[ VOLTAR ]</button>
         </div>
 
-        <div id="resposta-obvio" class="hidden">
+        <div id="resposta-obvio" class="hidden secao-conteudo">
             <h1>PROVE SEU AMOR!</h1>
-            <div id="wrapper-fugitivo" style="height: 150px; position: relative; width: 100%;">
+            <div id="wrapper-fugitivo" style="height: 120px; position: relative;">
                 <button id="btn-fugitivo" style="min-width:160px;">ME DA UM BEIJO! 💋</button>
             </div>
             <div id="final-obvio" class="hidden">
-                <span class="emoji-central">🙄</span>
-                <p style="color: var(--p-pink); font-size: 12px;">VOCE ME PEGOU !!!</p>
+                <span style="font-size: 40px; display: block; margin-bottom: 10px;">🙄</span>
+                <p style="color: var(--p-pink); font-size: 11px;">VOCE ME PEGOU !!!</p>
             </div>
             <button class="btn-voltar" onclick="voltarMenu()">[ VOLTAR ]</button>
         </div>
 
-        <div id="resposta-sorriso" class="hidden">
+        <div id="resposta-sorriso" class="hidden secao-conteudo">
             <h1>SEU SORRISO ILUMINA TUDO!</h1>
-            <div class="container-foto">
-                <img src="sorriso.jpeg" alt="SORRISO" class="foto-pixel" style="border-color: #ffaa00;">
-            </div>
-            <p class="texto-alinhado" style="color: #fff; font-size: 9px;">SEU SORRISO E PERFEITO, <br> SOU APAIXONADA!</p>
+            <img src="sorriso.jpeg" alt="SORRISO" class="foto-pixel" style="border-color: #ffaa00;">
+            <p style="color: #fff; font-size: 8px;">SEU SORRISO E PERFEITO, <br> SOU APAIXONADA!</p>
             <button class="btn-voltar" onclick="voltarMenu()">[ VOLTAR ]</button>
         </div>
+
     </div>
 
     <template id="template-conquista">
         <div class="notificacao-conquista">
-            <div class="moldura-icone"><img src="estrela.png" class="icone-estrela" style="background: transparent;"></div>
-            <div class="texto-conquista">
-                <div class="ach-header">Achievement Unlocked</div>
-                <div class="ach-title"></div>
+            <div style="border: 2px solid var(--p-purple); margin-right: 10px; padding: 4px;"><img src="estrela.png" class="icone-estrela"></div>
+            <div>
+                <div style="font-size: 6px; color: var(--p-yellow);">Achievement Unlocked</div>
+                <div class="ach-title" style="font-size: 7px;"></div>
             </div>
         </div>
     </template>
@@ -205,47 +187,28 @@
         }
 
         function iniciarExplosaoVitoria() {
-            for (let i = 0; i < 70; i++) {
+            for (let i = 0; i < 60; i++) {
                 setTimeout(() => {
                     const el = document.createElement('div');
                     el.className = 'particula-vitoria';
                     const tipo = Math.random();
-                    if (tipo > 0.6) {
-                        el.innerHTML = `<img src="estrela.png" style="width:26px; height:26px; image-rendering: pixelated; filter: drop-shadow(0 0 5px var(--p-purple));">`;
-                    } else {
-                        el.innerText = tipo > 0.3 ? '💜' : '💙';
-                        el.style.fontSize = '24px';
-                        el.style.filter = `drop-shadow(0 0 5px ${tipo > 0.3 ? 'var(--p-purple)' : 'var(--p-cyan)'})`;
-                    }
-                    const angleDeg = (Math.random() * 120 - 60);
-                    const velocity = Math.random() * 200 + 150;
-                    el.style.setProperty('--dx', `${Math.sin(angleDeg * Math.PI / 180) * velocity}px`);
-                    el.style.setProperty('--dy', `-${Math.cos(angleDeg * Math.PI / 180) * velocity + 500}px`);
-                    el.style.setProperty('--rot', `${Math.random() * 720 - 360}deg`);
-                    el.style.animationDuration = (Math.random() * 1.5 + 1.5) + 's';
+                    if (tipo > 0.6) el.innerHTML = `<img src="estrela.png" style="width:24px;">`;
+                    else el.innerText = tipo > 0.3 ? '💜' : '💙';
+                    const angleDeg = (Math.random() * 100 - 50);
+                    const velocity = Math.random() * 250 + 200;
+                    el.style.setProperty('--dx', `${Math.sin(angleDeg * Math.PI/180) * velocity}px`);
+                    el.style.setProperty('--dy', `-${velocity + 400}px`);
+                    el.style.setProperty('--rot', `${Math.random() * 360}deg`);
                     document.body.appendChild(el);
-                    setTimeout(() => el.remove(), 3500);
-                }, i * 20);
+                    setTimeout(() => el.remove(), 3000);
+                }, i * 25);
             }
         }
 
-        function iniciarAudioAoClicar() { if (audio.paused) audio.play().catch(() => {}); }
-
-        function initEffect() {
-            setInterval(() => {
-                const div = document.createElement('div');
-                div.className = 'floating';
-                div.innerText = ['💜', '💙'][Math.floor(Math.random() * 2)];
-                div.style.left = (Math.random() * 90) + 'vw';
-                document.body.appendChild(div);
-                setTimeout(() => div.remove(), 3000);
-            }, 300);
-        }
-
         function mostrarSecao(tipo) {
-            iniciarAudioAoClicar();
             document.querySelectorAll('#jogo-container > div').forEach(div => div.classList.add('hidden'));
-            document.getElementById('resposta-' + tipo).classList.remove('hidden');
+            const secao = document.getElementById('resposta-' + tipo);
+            secao.classList.remove('hidden');
             if(tipo === 'concerteza') {
                 atualizarContador();
                 intervaloContador = setInterval(atualizarContador, 1000);
@@ -275,15 +238,13 @@
             document.getElementById('wrapper-fugitivo').style.display = 'block';
         }
 
-        function fugir(e) {
-            if (e.type === 'touchstart') e.preventDefault();
+        function fugir() {
             cliquesFugitivo++;
             const wrap = document.getElementById('wrapper-fugitivo');
             if(cliquesFugitivo < 6) {
                 btnF.style.position = 'absolute';
                 btnF.style.left = Math.random() * (wrap.clientWidth - btnF.clientWidth) + 'px';
                 btnF.style.top = Math.random() * (wrap.clientHeight - btnF.clientHeight) + 'px';
-                if(cliquesFugitivo === 3) btnF.innerText = "MAIS RAPIDO! ✨";
             } else {
                 btnF.style.display = 'none';
                 wrap.style.display = 'none';
@@ -294,11 +255,19 @@
         }
 
         btnF.addEventListener('click', fugir);
-        btnF.addEventListener('touchstart', fugir);
+        btnF.addEventListener('touchstart', (e) => { e.preventDefault(); fugir(); });
+        function iniciarAudioAoClicar() { if (audio.paused) audio.play().catch(() => {}); }
 
         window.onload = () => {
-            initEffect();
-            setTimeout(() => dispararConquista("eu namoro a menina mais linda do mundo!!!❤️"), 1500);
+            setInterval(() => {
+                const div = document.createElement('div');
+                div.className = 'floating';
+                div.innerText = ['💜', '💙'][Math.floor(Math.random() * 2)];
+                div.style.left = (Math.random() * 90) + 'vw';
+                document.body.appendChild(div);
+                setTimeout(() => div.remove(), 3000);
+            }, 400);
+            setTimeout(() => dispararConquista("eu namoro a menina mais linda do mundo!!!❤️"), 1000);
         };
     </script>
 </body>
