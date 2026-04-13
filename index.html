@@ -1,0 +1,392 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PARA MINHA NAMORADA ISADORA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --p-purple: #9d50bb;
+            --p-blue: #6e7ff3;
+            --p-cyan: #00f2fe;
+            --p-pink: #ff007f;
+            --p-dark: #0a081a;
+            --p-border: #ffffff;
+            --p-yellow: #ffeb3b;
+        }
+
+        /* Configurações Globais */
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            text-transform: uppercase;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Press Start 2P', cursive;
+            background: var(--p-dark);
+            background-image: radial-gradient(circle at 50% 50%, #1a1a3a 0%, #0a081a 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* Efeito de linhas de TV antiga (CRT) */
+        body::after {
+            content: " ";
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            z-index: 100;
+            background-size: 100% 4px;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+
+        #jogo-container {
+            background: rgba(15, 10, 30, 0.95);
+            border: 4px solid var(--p-border);
+            padding: 30px 15px;
+            width: 90%;
+            max-width: 360px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 40px rgba(110, 127, 243, 0.4);
+            z-index: 10;
+        }
+
+        /* CORAÇÃO AZUL PIXEL ART */
+        .container-coracao {
+            width: 100%;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .coracao-azul {
+            position: relative;
+            width: 10px;
+            height: 10px;
+            background: transparent;
+            /* Cada ponto do box-shadow é um pixel do coração */
+            box-shadow: 
+                20px 0 var(--p-blue), 30px 0 var(--p-blue), 60px 0 var(--p-blue), 70px 0 var(--p-blue),
+                10px 10px var(--p-blue), 20px 10px var(--p-blue), 30px 10px var(--p-blue), 40px 10px var(--p-blue), 50px 10px var(--p-blue), 60px 10px var(--p-blue), 70px 10px var(--p-blue), 80px 10px var(--p-blue),
+                0px 20px var(--p-blue), 10px 20px var(--p-blue), 20px 20px var(--p-blue), 30px 20px var(--p-blue), 40px 20px var(--p-blue), 50px 20px var(--p-blue), 60px 20px var(--p-blue), 70px 20px var(--p-blue), 80px 20px var(--p-blue), 90px 20px var(--p-blue),
+                0px 30px var(--p-blue), 10px 30px var(--p-blue), 20px 30px var(--p-blue), 30px 30px var(--p-blue), 40px 30px var(--p-blue), 50px 30px var(--p-blue), 60px 30px var(--p-blue), 70px 30px var(--p-blue), 80px 30px var(--p-blue), 90px 30px var(--p-blue),
+                10px 40px var(--p-blue), 20px 40px var(--p-blue), 30px 40px var(--p-blue), 40px 40px var(--p-blue), 50px 40px var(--p-blue), 60px 40px var(--p-blue), 70px 40px var(--p-blue), 80px 40px var(--p-blue),
+                20px 50px var(--p-blue), 30px 50px var(--p-blue), 40px 50px var(--p-blue), 50px 50px var(--p-blue), 60px 50px var(--p-blue), 70px 50px var(--p-blue),
+                30px 60px var(--p-blue), 40px 60px var(--p-blue), 50px 60px var(--p-blue), 60px 60px var(--p-blue),
+                40px 70px var(--p-blue), 50px 70px var(--p-blue);
+            animation: pulse 1.2s ease-in-out infinite;
+            transform: translateX(-45px) translateY(-30px);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-45px) translateY(-30px) scale(1); filter: drop-shadow(0 0 5px var(--p-blue)); }
+            50% { transform: translateX(-45px) translateY(-30px) scale(1.1); filter: drop-shadow(0 0 20px var(--p-blue)); }
+        }
+
+        h1 { 
+            font-size: 11px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px var(--p-blue);
+            color: #fff;
+        }
+
+        /* Botões */
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        button {
+            padding: 18px 10px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 8px;
+            border: 4px solid #000;
+            cursor: pointer;
+            background: var(--p-blue);
+            color: white;
+            box-shadow: inset -4px -4px 0px rgba(0,0,0,0.4), 4px 4px 0px rgba(0,0,0,0.2);
+            position: relative;
+            transition: 0.1s;
+        }
+
+        button:active {
+            transform: translate(2px, 2px);
+            box-shadow: inset 2px 2px 0px rgba(0,0,0,0.4);
+        }
+
+        .purple-btn { background: var(--p-purple); }
+        .pink-btn { background: var(--p-pink); }
+
+        .btn-voltar {
+            margin-top: 25px;
+            background: #444;
+            font-size: 7px;
+            width: 100%;
+        }
+
+        .instrucao {
+            font-size: 8px;
+            margin-top: 20px;
+            color: var(--p-cyan);
+            animation: blink 1s infinite;
+            letter-spacing: 1px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hidden { display: none !important; }
+
+        /* Elementos Flutuantes */
+        .floating {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 3s linear forwards;
+            font-size: 24px;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-20vh); opacity: 0; }
+        }
+
+        /* Contador */
+        #contador {
+            font-size: 9px;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 20px 10px;
+            border: 4px double var(--p-cyan);
+            margin: 20px 0;
+            line-height: 2.5;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
+
+        .pixel-icon {
+            font-size: 45px;
+            margin: 15px 0;
+            display: inline-block;
+            animation: bounce 0.6s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-15px); }
+        }
+
+        /* Botão Fugitivo */
+        #btn-fugitivo {
+            background: var(--p-pink);
+            z-index: 1001;
+            min-width: 200px;
+        }
+
+        /* Estrelas de Fundo */
+        .pixel-star {
+            position: absolute;
+            background: white;
+            z-index: -1;
+            opacity: 0.4;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="jogo-container">
+        <!-- TELA INICIAL -->
+        <div id="tela-inicial">
+            <div class="container-coracao">
+                <div class="coracao-azul"></div>
+            </div>
+            
+            <h1>VOCÊ ME AMA?</h1>
+            
+            <div class="btn-container">
+                <button class="purple-btn" onclick="mostrarSecao('sim')">SIM <br> [ 💜 ]</button>
+                <button onclick="mostrarSecao('certeza')">CERTEZA <br> [ 💙 ]</button>
+                <button class="pink-btn" onclick="mostrarSecao('obvio')">ÓBVIO ISA <br> [ ✨ ]</button>
+            </div>
+            
+            <div class="instrucao">ESCOLHA UMA</div>
+        </div>
+
+        <!-- SEÇÃO: SIM -->
+        <div id="resposta-sim" class="hidden">
+            <h1>EU TAMBÉM TE AMO ISADORA!</h1>
+            <span class="pixel-icon">👾</span>
+            <p style="color: var(--p-cyan); font-size: 10px; line-height: 1.4;">VOCÊ É A MELHOR PESSOA QUE CONHEÇO!</p>
+            <button class="btn-voltar" onclick="voltarMenu()">[ VOLTAR ]</button>
+        </div>
+
+        <!-- SEÇÃO: CERTEZA -->
+        <div id="resposta-certeza" class="hidden">
+            <h1 style="font-size: 9px;">CONECTADAS DESDE <br><span style="color: var(--p-yellow)">05/07/2025</span></h1>
+            <div id="contador">CALCULANDO...</div>
+            <p style="color: var(--p-blue); font-size: 8px; margin-top: 10px;">TEMPO DE CONEXÃO TOTAL</p>
+            <button class="btn-voltar" onclick="voltarMenu()">[ VOLTAR ]</button>
+        </div>
+
+        <!-- SEÇÃO: ÓBVIO (BOTÃO QUE FOGE) -->
+        <div id="resposta-obvio" class="hidden">
+            <h1 id="titulo-fugitivo">PROVE SEU AMOR!</h1>
+            <div id="wrapper-fugitivo" style="height: 180px; display: flex; align-items: center; justify-content: center; position: relative;">
+                <button id="btn-fugitivo">ME DÁ UM BEIJO! 💋</button>
+            </div>
+            <div id="final-obvio" class="hidden">
+                <span class="pixel-icon">💖</span>
+                <p style="color: var(--p-pink); font-size: 12px; letter-spacing: 1px;">VOCÊ ME PEGOU !!!</p>
+            </div>
+            <button class="btn-voltar" onclick="voltarMenu()">[ VOLTAR ]</button>
+        </div>
+    </div>
+
+    <script>
+        // Data de início: 5 de Julho de 2025
+        const dataInicio = new Date(2025, 6, 5, 0, 0, 0); 
+        let intervaloEfeitos, intervaloContador, cliquesFugitivo = 0;
+        const btnFugitivo = document.getElementById('btn-fugitivo');
+
+        // Criar céu estrelado aleatório
+        function initStars() {
+            for(let i=0; i<30; i++) {
+                const star = document.createElement('div');
+                star.className = 'pixel-star';
+                const size = Math.random() > 0.8 ? 4 : 2;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                document.body.appendChild(star);
+            }
+        }
+        initStars();
+
+        function mostrarSecao(tipo) {
+            // Esconder todas as telas
+            document.querySelectorAll('#jogo-container > div').forEach(div => div.classList.add('hidden'));
+            
+            // Limpar intervalos antigos
+            clearInterval(intervaloEfeitos);
+            clearInterval(intervaloContador);
+
+            const secao = document.getElementById('resposta-' + tipo);
+            secao.classList.remove('hidden');
+
+            if(tipo === 'sim') {
+                intervaloEfeitos = setInterval(() => criarEmoji('💜'), 600);
+            } 
+            else if(tipo === 'certeza') {
+                atualizarContador();
+                intervaloContador = setInterval(atualizarContador, 1000);
+                intervaloEfeitos = setInterval(() => criarEmoji('💙'), 700);
+            }
+            else if(tipo === 'obvio') {
+                resetarBotaoFugitivo();
+            }
+        }
+
+        function voltarMenu() {
+            clearInterval(intervaloEfeitos);
+            clearInterval(intervaloContador);
+            document.querySelectorAll('#jogo-container > div').forEach(div => div.classList.add('hidden'));
+            document.getElementById('tela-inicial').classList.remove('hidden');
+        }
+
+        function atualizarContador() {
+            const agora = new Date();
+            const diff = agora - dataInicio;
+            const seg = 1000, min = seg * 60, hora = min * 60, dia = hora * 24;
+
+            if (diff < 0) {
+                const absDiff = Math.abs(diff);
+                const d = Math.floor(absDiff / dia), h = Math.floor((absDiff % dia) / hora), m = Math.floor((absDiff % hora) / min), s = Math.floor((absDiff % min) / seg);
+                document.getElementById('contador').innerHTML = `FALTAM:<br>${d}D ${h}H ${m}M ${s}S`;
+                return;
+            }
+
+            const d = Math.floor(diff / dia);
+            const h = Math.floor((diff % dia) / hora);
+            const m = Math.floor((diff % hora) / min);
+            const s = Math.floor((diff % min) / seg);
+
+            document.getElementById('contador').innerHTML = `DIAS: ${d}<br>HORAS: ${h}<br>MINS: ${m}<br>SECS: ${s}`;
+        }
+
+        function criarEmoji(emoji) {
+            const div = document.createElement('div');
+            div.className = 'floating';
+            div.innerText = emoji;
+            div.style.left = (Math.random() * 90) + 'vw';
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 3000);
+        }
+
+        function resetarBotaoFugitivo() {
+            cliquesFugitivo = 0;
+            btnFugitivo.style.display = 'block';
+            btnFugitivo.style.position = 'relative';
+            btnFugitivo.style.left = '0'; 
+            btnFugitivo.style.top = '0';
+            btnFugitivo.innerText = "ME DÁ UM BEIJO! 💋";
+            document.getElementById('final-obvio').classList.add('hidden');
+            document.getElementById('wrapper-fugitivo').style.display = 'flex';
+        }
+
+        function handleFugitivo(e) {
+            // Impedir comportamento padrão no mobile
+            if (e.type === 'touchstart') e.preventDefault();
+            
+            cliquesFugitivo++;
+            
+            // O botão foge 6 vezes antes de ser "pego"
+            if(cliquesFugitivo < 7) {
+                const margin = 60;
+                // Cálculo de posição aleatória dentro da tela
+                const x = Math.random() * (window.innerWidth - 220 - margin) + margin/2;
+                const y = Math.random() * (window.innerHeight - 100 - margin) + margin/2;
+                
+                btnFugitivo.style.position = 'fixed';
+                btnFugitivo.style.left = x + 'px';
+                btnFugitivo.style.top = y + 'px';
+                
+                // Mudar texto conforme foge
+                if(cliquesFugitivo === 2) btnFugitivo.innerText = "MAIS RÁPIDO! ✨";
+                if(cliquesFugitivo === 4) btnFugitivo.innerText = "QUASE LÁ! 🔥";
+                if(cliquesFugitivo === 6) btnFugitivo.innerText = "ÚLTIMA CHANCE!";
+            } else {
+                // Vitória
+                btnFugitivo.style.display = 'none';
+                document.getElementById('wrapper-fugitivo').style.display = 'none';
+                document.getElementById('final-obvio').classList.remove('hidden');
+                intervaloEfeitos = setInterval(() => criarEmoji('💖'), 300);
+            }
+        }
+
+        // Suporte para clique e toque
+        btnFugitivo.addEventListener('touchstart', handleFugitivo);
+        btnFugitivo.addEventListener('click', handleFugitivo);
+    </script>
+</body>
+</html>
+
+```
