@@ -56,8 +56,24 @@
         }
 
         .notificacao-conquista.visible { opacity: 1; transform: translateY(0); }
-        .moldura-icone { width: 40px; height: 40px; border: 2px solid var(--p-cyan); margin-right: 12px; display: flex; align-items: center; justify-content: center; background: #000; }
-        .icone-estrela { width: 25px; height: 25px; image-rendering: pixelated; }
+        
+        /* MOLDURA DA ESTRELA TRANSPARENTE */
+        .moldura-icone { 
+            width: 44px; height: 44px; 
+            border: 2px solid var(--p-purple); 
+            margin-right: 12px; 
+            display: flex; align-items: center; justify-content: center; 
+            background: transparent; 
+        }
+
+        /* EFEITO DE BRILHO ROXO IGUAL À FOTO */
+        .icone-estrela { 
+            width: 30px; height: 30px; 
+            image-rendering: pixelated; 
+            background: transparent;
+            filter: drop-shadow(0 0 5px var(--p-purple)) drop-shadow(0 0 2px #fff);
+        }
+
         .ach-header { font-size: 7px; color: var(--p-yellow); margin-bottom: 4px; }
         .ach-title { font-size: 8px; color: #fff; }
 
@@ -164,7 +180,9 @@
 
     <template id="template-conquista">
         <div class="notificacao-conquista">
-            <div class="moldura-icone"><img src="estrela.png" class="icone-estrela"></div>
+            <div class="moldura-icone">
+                <img src="estrela.png" class="icone-estrela">
+            </div>
             <div class="texto-conquista">
                 <div class="ach-header">Achievement Unlocked</div>
                 <div class="ach-title"></div>
@@ -268,7 +286,7 @@
 
         window.onload = () => {
             initEffect();
-            setTimeout(() => dispararConquista("eu namoro a menina mais linda do mundo!!! ❤️"), 1500);
+            setTimeout(() => dispararConquista("eu namoro a menina mais linda do mundo!!!❤️"), 1500);
         };
     </script>
 </body>
