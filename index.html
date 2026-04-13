@@ -56,26 +56,29 @@
         }
 
         .notificacao-conquista.visible { opacity: 1; transform: translateY(0); }
-        
-        /* MOLDURA DA ESTRELA TRANSPARENTE */
         .moldura-icone { 
-            width: 44px; height: 44px; 
-            border: 2px solid var(--p-purple); 
-            margin-right: 12px; 
-            display: flex; align-items: center; justify-content: center; 
+            width: 44px; height: 44px; border: 2px solid var(--p-purple); 
+            margin-right: 12px; display: flex; align-items: center; justify-content: center; 
             background: transparent; 
         }
 
-        /* EFEITO DE BRILHO ROXO IGUAL À FOTO */
         .icone-estrela { 
-            width: 30px; height: 30px; 
-            image-rendering: pixelated; 
-            background: transparent;
+            width: 30px; height: 30px; image-rendering: pixelated; 
             filter: drop-shadow(0 0 5px var(--p-purple)) drop-shadow(0 0 2px #fff);
         }
 
-        .ach-header { font-size: 7px; color: var(--p-yellow); margin-bottom: 4px; }
-        .ach-title { font-size: 8px; color: #fff; }
+        /* --- ANIMAÇÃO DE CHUVA --- */
+        @keyframes quedaChuva {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .elemento-chuva {
+            position: fixed; z-index: 9998; pointer-events: none;
+            animation: quedaChuva 4s linear forwards;
+        }
 
         /* --- ELEMENTOS VISUAIS --- */
         .foto-pixel {
@@ -181,7 +184,7 @@
     <template id="template-conquista">
         <div class="notificacao-conquista">
             <div class="moldura-icone">
-                <img src="estrela.png" class="icone-estrela">
+                <img src="estrela.png" class="icone-estrela" style="background: transparent;">
             </div>
             <div class="texto-conquista">
                 <div class="ach-header">Achievement Unlocked</div>
@@ -206,6 +209,29 @@
                 clone.classList.remove('visible');
                 setTimeout(() => clone.remove(), 600);
             }, 5000);
+        }
+
+        function iniciarChuvaVitoria() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const el = document.createElement('div');
+                    el.className = 'elemento-chuva';
+                    const tipo = Math.random();
+                    
+                    if (tipo > 0.6) {
+                        el.innerHTML = `<img src="estrela.png" style="width:25px; height:25px; filter: drop-shadow(0 0 5px var(--p-purple));">`;
+                    } else {
+                        el.innerText = tipo > 0.3 ? '💜' : '💙';
+                        el.style.fontSize = '20px';
+                    }
+                    
+                    el.style.left = Math.random() * 100 + 'vw';
+                    el.style.top = '-50px';
+                    el.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 4000);
+                }, i * 100);
+            }
         }
 
         function iniciarAudioAoClicar() {
@@ -277,7 +303,8 @@
                 btnF.style.display = 'none';
                 wrap.style.display = 'none';
                 document.getElementById('final-obvio').classList.remove('hidden');
-                dispararConquista("Ganhou um beijo meu 💋");
+                dispararConquista("Pegou o Beijo da Isadora! 💋");
+                iniciarChuvaVitoria();
             }
         }
 
