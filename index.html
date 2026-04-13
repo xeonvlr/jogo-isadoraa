@@ -12,7 +12,7 @@
             --p-cyan: #00f2fe;
             --p-pink: #ff007f;
             --p-dark: #0a081a;
-            --p-border: #ffffff; /* Cor branca para as bordas das fotos e contador */
+            --p-border: #ffffff;
             --p-yellow: #ffeb3b;
         }
 
@@ -22,26 +22,37 @@
             margin: 0; padding: 0;
             font-family: 'Press Start 2P', cursive;
             background: var(--p-dark);
-            /* Novo fundo com a estrela.jpeg espalhada */
+            
+            /* --- NOVO FUNDO APERFEIÇOADO --- */
+            /* 1. Base: Gradiente Céu (Roxo para Azul Profundo) */
             background-image: 
-                radial-gradient(circle at 50% 50%, #1a1a3a 0%, #0a081a 100%),
+                radial-gradient(circle at 50% 50%, #2e1a47 0%, #1a1a3a 40%, #050510 100%),
+                /* 2. Camada de Pontinhos de Luz (Estrelas Brancas CSS) */
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px),
+                /* 3. Sua Estrela (`estrela.jpeg`) integrada */
                 url('estrela.jpeg');
-            background-repeat: repeat;
-            background-size: 100px 100px; /* Ajuste o tamanho da estrela no fundo aqui */
-            background-blend-mode: overlay; /* Mistura a imagem com o gradiente de cor */
+            
+            /* Configurações das camadas de fundo */
+            background-repeat: no-repeat, repeat, repeat, repeat, repeat;
+            background-position: center, 20px 50px, 130px 270px, 70px 100px, center;
+            /* Tamanhos: Gradiente, Estrelas CSS Pequenas, Médias, Grandes, Sua Estrela */
+            background-size: cover, 200px 200px, 150px 150px, 300px 300px, 80px 80px; 
+            background-blend-mode: normal, screen, screen, screen, overlay; /* Mistura perfeita */
             
             height: 100vh; display: flex; justify-content: center; align-items: center;
             overflow: hidden; color: white;
         }
 
         #jogo-container {
-            background: rgba(15, 10, 30, 0.95);
-            border: 4px solid #ffffff; /* Borda branca do container principal */
+            background: rgba(15, 10, 30, 0.96);
+            border: 4px solid #ffffff;
             padding: 30px 20px; width: 92%; max-width: 360px;
             min-height: 450px;
             display: flex; flex-direction: column; justify-content: center;
             text-align: center; position: relative;
-            box-shadow: 0 0 40px rgba(110, 127, 243, 0.4); z-index: 10;
+            box-shadow: 0 0 40px rgba(157, 80, 187, 0.4); z-index: 10;
         }
 
         .secao-conteudo {
@@ -69,44 +80,38 @@
         .icone-estrela { 
             width: 24px; height: 24px; 
             image-rendering: pixelated; 
-            animation: pulse-purple 2s ease-in-out infinite; /* Mantém o pulso roxo na estrela da conquista */
+            animation: pulse-purple 2s ease-in-out infinite;
         }
 
-        /* Borda Retrô Roxa (usada na estrela) */
         .borda-retro-roxa {
             border: 4px double var(--p-purple);
             box-shadow: 0 0 10px rgba(157, 80, 187, 0.5);
         }
 
-        /* Borda Retrô Branca (usada nas fotos e AGORA no contador) */
         .borda-retro-branca {
-            border: 4px double #ffffff; /* Borda dupla branca */
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); /* Brilho branco suave */
+            border: 4px double #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
-        /* --- ESTILOS DE TEXTO --- */
         h1 { font-size: 10px; line-height: 1.6; margin: 0; text-shadow: 2px 2px var(--p-blue); }
         p { margin: 0; line-height: 1.6; }
 
         .foto-pixel {
             width: 170px; height: auto; 
             padding: 5px; image-rendering: pixelated; align-self: center;
-            animation: pulse-white 2s ease-in-out infinite; /* Animação pulsar branca para as fotos */
+            animation: pulse-white 2s ease-in-out infinite;
         }
 
-        /* Animação pulsar roxa (para a estrela e container) */
         @keyframes pulse-purple {
             0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--p-purple)); }
             50% { transform: scale(1.03); filter: drop-shadow(0 0 15px var(--p-purple)); }
         }
 
-        /* Animação pulsar branca (para as fotos) */
         @keyframes pulse-white {
             0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px #ffffff); }
             50% { transform: scale(1.03); filter: drop-shadow(0 0 15px #ffffff); }
         }
 
-        /* --- BOTÕES --- */
         .btn-container { display: flex; flex-direction: column; gap: 12px; }
         button {
             padding: 16px 10px; font-family: 'Press Start 2P', cursive; font-size: 8px;
@@ -119,15 +124,12 @@
         .pink-btn { background: var(--p-pink); }
         .hidden { display: none !important; }
 
-        /* --- FUNDO E EFEITOS --- */
         .floating { position: absolute; pointer-events: none; z-index: 1; animation: floatUp 3s linear forwards; font-size: 24px; }
         @keyframes floatUp { 0% { transform: translateY(110vh); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(-20vh); opacity: 0; } }
 
         #contador {
             font-size: 9px; background: rgba(0, 0, 0, 0.85); padding: 15px 10px;
             line-height: 2.2;
-            /* A animação não existe aqui no CSS original, o pulso é só nas fotos. 
-               O contador só tem a borda e o fundo. */
         }
 
         @keyframes explosaoVitoria {
