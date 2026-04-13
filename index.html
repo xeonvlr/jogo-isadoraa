@@ -42,30 +42,34 @@
             box-shadow: 0 0 40px rgba(110, 127, 243, 0.4); z-index: 10;
         }
 
-        /* --- SISTEMA DE CONQUISTAS --- */
+        /* --- SISTEMA DE CONQUISTAS (TAMANHO MÉDIO) --- */
         #conquista-wrapper {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            width: 94vw; max-width: 380px; display: flex; flex-direction: column;
+            width: 94vw; max-width: 320px; display: flex; flex-direction: column;
             gap: 10px; z-index: 9999; pointer-events: none;
         }
 
         .notificacao-conquista {
             background: rgba(20, 15, 40, 0.98); border: 3px solid #fff; outline: 3px solid #000;
-            padding: 10px; display: flex; align-items: center; opacity: 0;
+            padding: 8px; display: flex; align-items: center; opacity: 0;
             transform: translateY(-50px); transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
         }
 
         .notificacao-conquista.visible { opacity: 1; transform: translateY(0); }
+
         .moldura-icone { 
-            width: 44px; height: 44px; border: 2px solid var(--p-purple); 
-            margin-right: 12px; display: flex; align-items: center; justify-content: center; 
+            width: 36px; height: 36px; border: 2px solid var(--p-purple); 
+            margin-right: 10px; display: flex; align-items: center; justify-content: center; 
             background: transparent; 
         }
 
         .icone-estrela { 
-            width: 30px; height: 30px; image-rendering: pixelated; 
-            filter: drop-shadow(0 0 5px var(--p-purple)) drop-shadow(0 0 2px #fff);
+            width: 24px; height: 24px; image-rendering: pixelated; 
+            filter: drop-shadow(0 0 4px var(--p-purple)) drop-shadow(0 0 1px #fff);
         }
+
+        .ach-header { font-size: 6px; color: var(--p-yellow); margin-bottom: 3px; }
+        .ach-title { font-size: 7px; color: #fff; line-height: 1.2; }
 
         /* --- ANIMAÇÃO DE CHUVA --- */
         @keyframes quedaChuva {
@@ -212,25 +216,24 @@
         }
 
         function iniciarChuvaVitoria() {
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 60; i++) {
                 setTimeout(() => {
                     const el = document.createElement('div');
                     el.className = 'elemento-chuva';
                     const tipo = Math.random();
-                    
                     if (tipo > 0.6) {
-                        el.innerHTML = `<img src="estrela.png" style="width:25px; height:25px; filter: drop-shadow(0 0 5px var(--p-purple));">`;
+                        el.innerHTML = `<img src="estrela.png" style="width:22px; height:22px; filter: drop-shadow(0 0 5px var(--p-purple));">`;
                     } else {
                         el.innerText = tipo > 0.3 ? '💜' : '💙';
                         el.style.fontSize = '20px';
+                        el.style.filter = `drop-shadow(0 0 3px ${tipo > 0.3 ? 'var(--p-purple)' : 'var(--p-cyan)'})`;
                     }
-                    
                     el.style.left = Math.random() * 100 + 'vw';
                     el.style.top = '-50px';
                     el.style.animationDuration = (Math.random() * 2 + 2) + 's';
                     document.body.appendChild(el);
                     setTimeout(() => el.remove(), 4000);
-                }, i * 100);
+                }, i * 80);
             }
         }
 
@@ -303,7 +306,7 @@
                 btnF.style.display = 'none';
                 wrap.style.display = 'none';
                 document.getElementById('final-obvio').classList.remove('hidden');
-                dispararConquista("Ganhou um beijo meu! 💋");
+                dispararConquista("Ganhou um beijo meu!! 💋");
                 iniciarChuvaVitoria();
             }
         }
