@@ -42,47 +42,44 @@
             box-shadow: 0 0 40px rgba(110, 127, 243, 0.4); z-index: 10;
         }
 
-        /* --- SISTEMA DE CONQUISTAS (TAMANHO MÉDIO) --- */
+        /* --- SISTEMA DE CONQUISTAS (TAMANHO MÉDIO AJUSTADO) --- */
         #conquista-wrapper {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            width: 94vw; max-width: 320px; display: flex; flex-direction: column;
+            width: 94vw; max-width: 340px; /* Reduzido max-width */
+            display: flex; flex-direction: column;
             gap: 10px; z-index: 9999; pointer-events: none;
         }
 
         .notificacao-conquista {
             background: rgba(20, 15, 40, 0.98); border: 3px solid #fff; outline: 3px solid #000;
-            padding: 8px; display: flex; align-items: center; opacity: 0;
+            padding: 8px; /* Reduzido padding */
+            display: flex; align-items: center; opacity: 0;
             transform: translateY(-50px); transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            width: auto; /* Quadrado se ajusta ao tamanho */
+            align-self: center; /* Centraliza a caixa em relação ao wrapper */
         }
 
         .notificacao-conquista.visible { opacity: 1; transform: translateY(0); }
-
+        
+        /* MOLDURA DA ESTRELA TRANSPARENTE (MÉDIA AJUSTADA) */
         .moldura-icone { 
-            width: 36px; height: 36px; border: 2px solid var(--p-purple); 
-            margin-right: 10px; display: flex; align-items: center; justify-content: center; 
+            width: 36px; height: 36px; /* Reduzido tamanho */
+            border: 2px solid var(--p-purple); 
+            margin-right: 10px; /* Reduzida margem */
+            display: flex; align-items: center; justify-content: center; 
             background: transparent; 
         }
 
+        /* EFEITO DE BRILHO ROXO (MÉDIO AJUSTADO) */
         .icone-estrela { 
-            width: 24px; height: 24px; image-rendering: pixelated; 
-            filter: drop-shadow(0 0 4px var(--p-purple)) drop-shadow(0 0 1px #fff);
+            width: 24px; height: 24px; /* Reduzido tamanho */
+            image-rendering: pixelated; 
+            background: transparent;
+            filter: drop-shadow(0 0 4px var(--p-purple)) drop-shadow(0 0 1px #fff); /* Ajustado brilho */
         }
 
-        .ach-header { font-size: 6px; color: var(--p-yellow); margin-bottom: 3px; }
-        .ach-title { font-size: 7px; color: #fff; line-height: 1.2; }
-
-        /* --- ANIMAÇÃO DE CHUVA --- */
-        @keyframes quedaChuva {
-            0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-        }
-
-        .elemento-chuva {
-            position: fixed; z-index: 9998; pointer-events: none;
-            animation: quedaChuva 4s linear forwards;
-        }
+        .ach-header { font-size: 6px; color: var(--p-yellow); margin-bottom: 3px; } /* Reduzida fonte */
+        .ach-title { font-size: 7px; color: #fff; line-height: 1.2; } /* Reduzida fonte */
 
         /* --- ELEMENTOS VISUAIS --- */
         .foto-pixel {
@@ -306,7 +303,7 @@
                 btnF.style.display = 'none';
                 wrap.style.display = 'none';
                 document.getElementById('final-obvio').classList.remove('hidden');
-                dispararConquista("Ganhou um beijo meu!! 💋");
+                dispararConquista("ganhou um beijo meu amor!! 💋"); /* Texto alterado */
                 iniciarChuvaVitoria();
             }
         }
